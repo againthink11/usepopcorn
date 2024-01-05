@@ -27,7 +27,6 @@ const tempWatchedData = [
   },
 ];
 const KEY = '8576fa62';
-const Query = 'interstellar';
 
 
 
@@ -36,6 +35,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState("inception");
+  const [selectedId, setSelectedId] = useState(null);
 
   async function fetchMovies () {
     try{ 
@@ -71,13 +71,14 @@ export default function App() {
   }, [query])
 
   
+  console.log(selectedId, 'selected ID')
 
   return (
     <>
       <NavBar movies={movies} query={query} setQuery={setQuery} setMovies={setMovies}/> 
       <Main>
-        <ListBox movies={movies} isLoading={isLoading} error={error}/>
-        <WatchedBox tempWatchedData={tempWatchedData}/>
+        <ListBox movies={movies} isLoading={isLoading} error={error} setSelectedId={setSelectedId}/>
+        <WatchedBox tempWatchedData={tempWatchedData} selectedId={selectedId} setSelectedId={setSelectedId}/>
       </Main>
     </>
   );

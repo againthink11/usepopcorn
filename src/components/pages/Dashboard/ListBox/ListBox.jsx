@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import MovieList from '../MovieList/MovieList';
 
-const ListBox = ({movies, isLoading, error}) => {
+const ListBox = ({movies, isLoading, error, setSelectedId}) => {
   const [isOpen1, setIsOpen1] = useState(true);
     return (
         <div className="box">
@@ -12,7 +12,7 @@ const ListBox = ({movies, isLoading, error}) => {
                 {isOpen1 ? "–" : "+"}
             </button>
             {isOpen1 && (
-                <MovieList movies={movies} isLoading={isLoading} error={error}/>
+                <MovieList movies={movies} isLoading={isLoading} error={error} setSelectedId={setSelectedId}/>
             )}
         </div>
     )

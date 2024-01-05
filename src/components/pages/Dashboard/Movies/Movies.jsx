@@ -1,10 +1,13 @@
 import React from 'react'
 
-const Movies = ({ movies }) => {
+const Movies = ({ movies,setSelectedId }) => {
+    const handleSelectedMovie = (id) => {
+        setSelectedId(id)
+    }
     return (
         <>
             {movies?.map((movie) => (
-                <li key={movie.imdbID}>
+                <li key={movie.imdbID} onClick={()=>handleSelectedMovie(movie.imdbID)}>
                     <img src={movie.Poster} alt={`${movie.Title} poster`} />
                     <h3>{movie.Title}</h3>
                     <div>

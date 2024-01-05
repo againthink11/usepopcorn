@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import WatchedList from '../WatchedList/WatchedList';
 import WatchedSummary from '../WatchedSummary/WatchedSummary';
+import { MovieDetails } from '../../MovieDetails/MovieDetails';
 
 
-const WatchedBox = ({tempWatchedData}) => {
+const WatchedBox = ({tempWatchedData, selectedId, setSelectedId}) => {
   const [watched, setWatched] = useState(tempWatchedData);
   const [isOpen2, setIsOpen2] = useState(true);
 
@@ -17,8 +18,12 @@ const WatchedBox = ({tempWatchedData}) => {
       </button>
       {isOpen2 && (
         <>
+          {selectedId ? <MovieDetails selectedId={selectedId} setSelectedId={setSelectedId}/> : 
+          <>
           <WatchedSummary watched={watched}/>
           <WatchedList watched={watched}/>
+          </>
+          }
         </>
       )}
     </div>
