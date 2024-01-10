@@ -4,6 +4,9 @@ const Movies = ({ movies,setSelectedId }) => {
     const handleSelectedMovie = (id) => {
         setSelectedId(id)
     }
+
+    
+    
     return (
         <>
             {movies?.map((movie) => (

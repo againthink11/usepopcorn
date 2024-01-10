@@ -67,18 +67,16 @@ export default function App() {
       
     }
     fetchMovies();
-    console.log(query, 'query Search')
   }, [query])
 
   
-  console.log(selectedId, 'selected ID')
 
   return (
     <>
       <NavBar movies={movies} query={query} setQuery={setQuery} setMovies={setMovies}/> 
       <Main>
         <ListBox movies={movies} isLoading={isLoading} error={error} setSelectedId={setSelectedId}/>
-        <WatchedBox tempWatchedData={tempWatchedData} selectedId={selectedId} setSelectedId={setSelectedId}/>
+        <WatchedBox tempWatchedData={tempWatchedData} selectedId={selectedId} setSelectedId={setSelectedId} setIsLoading={setIsLoading} isLoading={setIsLoading} error={setIsLoading} setError={setIsLoading}/>
       </Main>
     </>
   );

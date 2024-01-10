@@ -19,7 +19,7 @@ const Watched = ({ watched }) => {
                             </p>
                             <p>
                                 <span>⏳</span>
-                                <span>{movie.runtime} min</span>
+                                <span>{movie.Runtime}</span>
                             </p>
                         </div>
                     </li>

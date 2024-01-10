@@ -3,9 +3,19 @@ const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 const WatchedSummary = ({watched}) => {
-    const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
+    console.log(watched, 'summary watched  ')
+   
+    const avgImdbRating = average(watched.map((movie) => 
+    {
+        const imdbrating = parseInt(movie.imdbRating);
+    return isNaN(imdbrating) ? 0 : imdbrating;
+    }));
   const avgUserRating = average(watched.map((movie) => movie.userRating));
-  const avgRuntime = average(watched.map((movie) => movie.runtime));
+  const avgRuntime = average(watched.map((movie) => {
+    const runtime = parseInt(movie.Runtime);
+    return isNaN(runtime) ? 0 : runtime;
+}));
+
     return (
         <div className="summary">
             <h2>Movies you watched</h2>
@@ -16,7 +26,7 @@ const WatchedSummary = ({watched}) => {
                 </p>
                 <p>
                     <span>⭐️</span>
-                    <span>{avgImdbRating}</span>
+                    <span>{Math.trunc(avgImdbRating)}</span>
                 </p>
                 <p>
                     <span>🌟</span>

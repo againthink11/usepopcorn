@@ -1,12 +1,54 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import WatchedList from '../WatchedList/WatchedList';
 import WatchedSummary from '../WatchedSummary/WatchedSummary';
 import { MovieDetails } from '../../MovieDetails/MovieDetails';
+import Loader from '../../../common/Loader/Loader';
 
 
-const WatchedBox = ({tempWatchedData, selectedId, setSelectedId}) => {
-  const [watched, setWatched] = useState(tempWatchedData);
+const WatchedBox = ({selectedId, setSelectedId}) => {
+  const [watched, setWatched] = useState([]);
   const [isOpen2, setIsOpen2] = useState(true);
+  const [error, setError] = useState('');
+  const [movie, setMovie] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const KEY = '8576fa62';
+  const handleBacktoMovies = () => {
+      setSelectedId(null)
+  }
+  const handleWatchedMovies = (rates) => {
+      setSelectedId(null)
+      setWatched(prevState => [...prevState, {...movie, userRating: rates}])
+  }
+
+ 
+  
+  useEffect(() => {
+    async function GetSelectedMovie() {
+        try {
+            setIsLoading(true)
+            setError('')
+            const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`);
+            if(!res.ok){
+                console.log('res is not ok')
+                throw new Error('There is a Server error!')
+            }
+            const data = await res.json();
+            if(data.Response === 'False'){
+                throw new Error('Invalid API key you are searching!')
+            }
+            setMovie(data)
+        }
+        catch (err) {
+            console.log(err)
+            setError(err.message)
+        }
+        finally {
+            setIsLoading(false)
+
+        }
+    }
+    GetSelectedMovie()
+}, [selectedId])
 
   return (
     <div className="box">
@@ -18,10 +60,18 @@ const WatchedBox = ({tempWatchedData, selectedId, setSelectedId}) => {
       </button>
       {isOpen2 && (
         <>
-          {selectedId ? <MovieDetails selectedId={selectedId} setSelectedId={setSelectedId}/> : 
+          {selectedId ? 
+          <>
+           {isLoading && <Loader/>}
+            {error && <div className='loader'>{error}</div>} 
+            {!isLoading && !error &&
+             <MovieDetails watched={watched} selectedId={selectedId} setSelectedId={setSelectedId} movie={movie} handleBacktoMovies={handleBacktoMovies} handleWatchedMovies={handleWatchedMovies}/> 
+            }
+          </>
+          : 
           <>
           <WatchedSummary watched={watched}/>
-          <WatchedList watched={watched}/>
+          <WatchedList watched={watched} setSelectedId={setSelectedId}/>
           </>
           }
         </>
