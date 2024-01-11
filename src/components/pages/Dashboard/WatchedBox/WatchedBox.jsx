@@ -20,6 +20,10 @@ const WatchedBox = ({selectedId, setSelectedId}) => {
       setWatched(prevState => [...prevState, {...movie, userRating: rates}])
   }
 
+  const deleteMovie = (id) => {
+    console.log(watched, id)
+    setWatched(watched.filter(item=> item.imdbID !== id))
+  }
  
   
   useEffect(() => {
@@ -71,7 +75,7 @@ const WatchedBox = ({selectedId, setSelectedId}) => {
           : 
           <>
           <WatchedSummary watched={watched}/>
-          <WatchedList watched={watched} setSelectedId={setSelectedId}/>
+          <WatchedList watched={watched} setSelectedId={setSelectedId} deleteMovie={deleteMovie}/>
           </>
           }
         </>
