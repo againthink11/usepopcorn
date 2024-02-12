@@ -3,7 +3,6 @@ const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 const WatchedSummary = ({watched}) => {
-    console.log(watched, 'summary watched  ')
    
     const avgImdbRating = average(watched.map((movie) => 
     {

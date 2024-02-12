@@ -21,7 +21,6 @@ const WatchedBox = ({selectedId, setSelectedId}) => {
   }
 
   const deleteMovie = (id) => {
-    console.log(watched, id)
     setWatched(watched.filter(item=> item.imdbID !== id))
   }
  
@@ -33,7 +32,6 @@ const WatchedBox = ({selectedId, setSelectedId}) => {
             setError('')
             const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`);
             if(!res.ok){
-                console.log('res is not ok')
                 throw new Error('There is a Server error!')
             }
             const data = await res.json();
@@ -43,7 +41,6 @@ const WatchedBox = ({selectedId, setSelectedId}) => {
             setMovie(data)
         }
         catch (err) {
-            console.log(err)
             setError(err.message)
         }
         finally {

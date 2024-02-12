@@ -29,6 +29,23 @@ export const MovieDetails = ({ movie, handleBacktoMovies, handleWatchedMovies, w
         setRated(watched.some(obj => obj.imdbID === selectedId))
         
     }, [selectedId])
+
+    // I need to understand this useEffect function in more details
+    useEffect(
+        function ()  {
+            function EscapedHandle (e) {
+                if(e.code === 'Escape'){
+                    handleBacktoMovies();
+                    console.log('key press')
+                }
+            }
+            document.addEventListener('keydown', EscapedHandle)
+            
+            return () => {
+                document.removeEventListener('keydown', EscapedHandle)  
+            }
+        }
+        ,[handleBacktoMovies])
     
     
     return (
@@ -53,7 +70,7 @@ export const MovieDetails = ({ movie, handleBacktoMovies, handleWatchedMovies, w
                     <section>
                         <div className='rating'>
                             {rated ?
-                            "You already rated this movie" 
+                            `You already rated this movie ${rates}` 
                             :
 <>
                         <Ratings maxRating={10} color='orange' size={24} setRates={setRates} />
